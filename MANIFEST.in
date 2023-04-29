@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include four_whats_net *.css
+recursive-include four_whats_net *.csv
+recursive-include four_whats_net *.html
+recursive-include four_whats_net *.ico
+recursive-include four_whats_net *.js
+recursive-include four_whats_net *.json
+recursive-include four_whats_net *.md
+recursive-include four_whats_net *.png
+recursive-include four_whats_net *.py
+recursive-include four_whats_net *.svg
+recursive-include four_whats_net *.txt
+recursive-exclude four_whats_net *.pyc
