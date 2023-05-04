@@ -24,7 +24,7 @@ class ERPGulfNotification(Notification):
 
         if self.is_standard:
             self.load_standard_properties(context)
-
+            
         try:
             if self.channel == '4Whats.net':
                 self.send_whatsapp_msg(doc, context)
@@ -34,13 +34,18 @@ class ERPGulfNotification(Notification):
         
     
     def send_whatsapp_msg(self, doc, context):
-        number = self.receiver_phone_number
-        if "{" in number:
-            number = frappe.render_template(self.receiver_phone_number, context)
-        message=frappe.render_template(self.message, context)
         settings = frappe.get_doc("Four Whats Net Configration")
-        phoneNumber = doc.phone.replace("+","").replace("-","")
-        url = f"{settings.api_url}/sendMessage/?instanceid={settings.instance_id}&token={settings.token}&phone={phoneNumber}&body={message}"
-        response = requests.get(url)
-#        frappe.msgprint(_(f"url is {url}"))
-        return response
+        recipients = self.get_receiver_list(doc, context)
+        for receipt in recipients:
+            frappe.msgprint(_(f"url is {receipt}"))
+            number = receipt
+            if "{" in number:
+                number = frappe.render_template(receipt, context)
+            message=frappe.render_template(self.message, context)        
+            phoneNumber = number.replace("+","").replace("-","")
+            if phoneNumber.startswith("00"):
+                phoneNumber = phoneNumber[1:]
+            url = f"{settings.api_url}/sendMessage/?instanceid={settings.instance_id}&token={settings.token}&phone={phoneNumber}&body={message}"
+            response = requests.get(url)
+#            frappe.msgprint(_(f"url is {url}"))
+#        return response

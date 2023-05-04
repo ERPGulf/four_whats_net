@@ -6,13 +6,7 @@ app_publisher = "hts-qatar"
 app_description = "4Whats.net"
 app_email = "azim@htsqatar.com"
 app_license = "MIT"
-fixtures = [{"dt": "Custom Field", "filters": [
-		[
-			"name", "in", [
-				"Notification-receiver_phone_number",
-			]
-		]
-	]}, {
+fixtures = [{
 		"dt": "Property Setter", "filters": [
 		[
 			"name", "in", [
