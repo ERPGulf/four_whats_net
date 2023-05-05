@@ -11,7 +11,7 @@ class ERPGulfNotification(Notification):
         super(ERPGulfNotification, self).validate()
     
     def validate_four_whats_settings(self):
-        settings = frappe.get_doc("Four Whats Net Configration")
+        settings = frappe.get_doc("Four Whats Net Configuration")
         if self.enabled and self.channel == "4Whats.net":
             if not settings.token or not settings.api_url or not settings.instance_id:
                 frappe.throw(_("Please configure 4Whats.net settings to send WhatsApp messages"))
@@ -34,10 +34,9 @@ class ERPGulfNotification(Notification):
         
     
     def send_whatsapp_msg(self, doc, context):
-        settings = frappe.get_doc("Four Whats Net Configration")
+        settings = frappe.get_doc("Four Whats Net Configuration")
         recipients = self.get_receiver_list(doc, context)
         for receipt in recipients:
-            frappe.msgprint(_(f"url is {receipt}"))
             number = receipt
             if "{" in number:
                 number = frappe.render_template(receipt, context)

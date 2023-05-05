@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestFourWhatsNetConfigration(FrappeTestCase):
+class TestFourWhatsNetConfiguration(FrappeTestCase):
 	pass
