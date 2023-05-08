@@ -36,15 +36,24 @@ class ERPGulfNotification(Notification):
     def send_whatsapp_msg(self, doc, context):
         settings = frappe.get_doc("Four Whats Net Configuration")
         recipients = self.get_receiver_list(doc, context)
+        receiverNumbers = []
         for receipt in recipients:
             number = receipt
             if "{" in number:
                 number = frappe.render_template(receipt, context)
             message=frappe.render_template(self.message, context)        
-            phoneNumber = number.replace("+","").replace("-","")
-            if phoneNumber.startswith("00"):
-                phoneNumber = phoneNumber[1:]
+            phoneNumber = self.get_receiver_phone_number(number)
+            receiverNumbers.append(phoneNumber)
             url = f"{settings.api_url}/sendMessage/?instanceid={settings.instance_id}&token={settings.token}&phone={phoneNumber}&body={message}"
             response = requests.get(url)
-#            frappe.msgprint(_(f"url is {url}"))
-#        return response
+        frappe.msgprint(_(f"Whatsapp message sent to {','.join(receiverNumbers)}"))
+    
+    def get_receiver_phone_number(self, number):
+        phoneNumber = number.replace("+","").replace("-","")
+        if phoneNumber.startswith("00"):
+            phoneNumber = phoneNumber[1:]
+        if phoneNumber.startswith("0"):
+            phoneNumber = phoneNumber[0:]  
+        if phoneNumber.startswith("966") == False:
+            phoneNumber = "966" + phoneNumber
+        return phoneNumber   
