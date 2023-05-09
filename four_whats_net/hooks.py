@@ -104,6 +104,10 @@ fixtures = [{
 # ---------------
 # Override standard doctype classes
 
+doctype_js = {
+	"Notification" : "public/js/notification.js"
+}
+
 override_doctype_class = {
 	"Notification": "four_whats_net.overrides.notifications.ERPGulfNotification"
  }
