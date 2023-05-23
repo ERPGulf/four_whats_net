@@ -50,10 +50,15 @@ class ERPGulfNotification(Notification):
     
     def get_receiver_phone_number(self, number):
         phoneNumber = number.replace("+","").replace("-","")
-        if phoneNumber.startswith("00"):
+        if phoneNumber.startswith("+") == True:
             phoneNumber = phoneNumber[1:]
-        if phoneNumber.startswith("0"):
-            phoneNumber = phoneNumber[0:]  
-        if phoneNumber.startswith("966") == False:
-            phoneNumber = "966" + phoneNumber
+        elif phoneNumber.startswith("00") == True:
+            phoneNumber = phoneNumber[2:]
+        elif phoneNumber.startswith("0") == True:
+            if len(phoneNumber) == 10:
+                phoneNumber = "966" + phoneNumber[1:]
+        else:
+            if len(phoneNumber) < 10: 
+                phoneNumber ="966" + phoneNumber
+    
         return phoneNumber   
