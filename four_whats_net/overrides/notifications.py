@@ -60,5 +60,7 @@ class ERPGulfNotification(Notification):
         else:
             if len(phoneNumber) < 10: 
                 phoneNumber ="966" + phoneNumber
-    
+        if phoneNumber.startswith("0") == True:
+            phoneNumber = phoneNumber[1:]
+        
         return phoneNumber   
